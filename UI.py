@@ -36,6 +36,8 @@ root = tk.Tk()
 root.geometry("310x320")
 root.title("placeholder text")
 root.configure(background="#0080ff")
+icon = tk.PhotoImage(file='icon.png')
+root.iconphoto(False, icon)
 
 # Create UI elements
 select_sid_button = tk.Button(root, text="Select Student ID Folder", command=select_sid)
