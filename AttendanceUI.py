@@ -13,9 +13,9 @@ class Attendance(object):
         window = tk.Tk()
 
         style = ttk.Style()
-        largeFontSize, smallFontSize = 15, 15
-        style.configure("mystyle.Treeview", font=(None, smallFontSize), rowheight=int(smallFontSize*2))
-        style.configure("mystyle.Treeview.Heading", font=(None, largeFontSize), rowheight=int(largeFontSize * 4))
+        largeFontSize, smallFontSize = 16, 14
+        style.configure("mystyle.Treeview", font=(None, smallFontSize), rowheight=int(smallFontSize*1.7))
+        style.configure("mystyle.Treeview.Heading", font=(None, largeFontSize, 'bold'), rowheight=int(largeFontSize * 4))
         style.layout("mystyle.Treeview", [('mystyle.Treeview.treearea', {'sticky': 'nswe'})])
 
         tree = ttk.Treeview(window, show='headings', style="mystyle.Treeview")
