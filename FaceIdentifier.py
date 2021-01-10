@@ -13,7 +13,6 @@ class FaceIdentifier(object):
         self.presentStudents = os.listdir(self.studentImagesPath)
 
         self.retrieve_names()
-        # self.upload_screenshots()
 
     def retrieve_names(self):
         for student in self.presentStudents:
@@ -21,25 +20,6 @@ class FaceIdentifier(object):
             self.images.append(currentImage)
             self.studentNames.append(os.path.splitext(student)[0].upper())
         print('Students in class: ' + str(self.studentNames))
-
-    # TODO: unfinished
-    def upload_screenshots(self):
-        # In the console, make sure the user includes the file type
-        # Also have some return in the UI if the user does not type an existing file
-        print('What is the name of your screenshot image file? Type \'Done\' if you are done.')
-        response = str(input())
-
-        while response != 'Done':
-            imageToConvert = self.screenshotImagesPath + '/' + response
-
-            try:
-                classImage = face_recognition.load_image_file(imageToConvert)
-            except IOError:
-                print('File location was not valid. ' +
-                      'Make sure that your file was typed correctly, including the file extension.')
-
-            print('What is the name of your screenshot image file? Type \'Done\' if you are done.')
-            response = str(input())
 
     def recognize_faces(self):
         students = SIDRecognize(self.studentImagesPath)
