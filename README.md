@@ -17,4 +17,4 @@ After cloning the repository, there are various libraries and other dependencies
 5. You're all set! You can run UI.py to begin!
 
 ## Additional Notes
-This project was created for nwHacks 2021 (Jan 9-10), by Wesley Choi, Raymond Liu, Justin Chan, and Jessi Nguyen. Please reach out if you have any questions, and please credit us if you fork the project! Feel free to read our DevPost at https://devpost.com/submit-to/11451-nwhacks-2021/start/submissions/191506-examine to read all about our process.
+This project was created for nwHacks 2021 (Jan 9-10), by Wesley Choi, Raymond Liu and Justin Chan. Please reach out if you have any questions, and please credit us if you fork the project! Feel free to read our DevPost at https://devpost.com/submit-to/11451-nwhacks-2021/start/submissions/191506-examine to read all about our process.
