@@ -22,10 +22,10 @@ class FaceIdentifier(object):
         print('Students in class: ' + str(self.studentNames))
 
     def recognize_faces(self):
-        students = SIDRecognize(self.studentImagesPath)
-        zoomScreenshots = ZoomRecognize(self.screenshotImagesPath)
-        students.encode()
-        presentStudentNames = zoomScreenshots.recognize(students)
+        self.sIDRecognize = SIDRecognize(self.studentImagesPath)
+        self.zoomRecognize = ZoomRecognize(self.screenshotImagesPath)
+        self.sIDRecognize.encode()
+        presentStudentNames = self.zoomRecognize.recognize(self.sIDRecognize)
 
         studentDict = {}
         for student in self.studentNames:
@@ -47,6 +47,9 @@ if __name__ == "__main__":
     # Dictionary of {student name : bool for whether they are in the class}
     studentDict = faceIdentifier.recognize_faces()
     print(studentDict)
+
+    # Display the images
+    faceIdentifier.zoomRecognize.showImages()
 
 
 """
