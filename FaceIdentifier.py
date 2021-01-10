@@ -9,7 +9,7 @@ class FaceIdentifier(object):
         self.studentImagesPath = studentImagesPath
         self.screenshotImagesPath = screenshotImagesPath
         self.images = []
-        self.classNames = []
+        self.studentNames = []
         self.presentStudents = os.listdir(self.studentImagesPath)
 
         self.retrieve_names()
@@ -19,10 +19,10 @@ class FaceIdentifier(object):
         for student in self.presentStudents:
             currentImage = cv2.imread(f'{self.studentImagesPath}/{student}')
             self.images.append(currentImage)
-            self.classNames.append(os.path.splitext(student)[0])
-        print(self.classNames)
+            self.studentNames.append(os.path.splitext(student)[0])
+        print('Students in class:' + str(self.studentNames))
 
-    # unfinished
+    # TODO: unfinished
     def upload_screenshots(self):
         # In the console, make sure the user includes the file type
         # Also have some return in the UI if the user does not type an existing file
@@ -47,9 +47,18 @@ class FaceIdentifier(object):
         students.encode()
         zoomScreenshots.recognize(students)
 
+# How to use this class
 if __name__ == "__main__":
-    faceIdentifier = FaceIdentifier('ImagesAttendance', 'ZoomImages')
+    studentImagesPath = 'ImagesAttendance'
+    screenshotImagesPath = 'ClassScreenshot'
+
+    # Creating the class
+    faceIdentifier = FaceIdentifier(studentImagesPath, screenshotImagesPath)
+
+    # Run the function to determine who is in the class (To be completed)
     faceIdentifier.recognize_faces()
+
+
 """
 # retrieve images from ImagesAttendance folder
 path = '../ImagesAttendance'
