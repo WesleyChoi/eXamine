@@ -4,10 +4,10 @@ import face_recognition
 
 # import images and convert to rgb
 
-imageSanta = face_recognition.load_image_file('imagesExamples/Santa.jpeg')
+imageSanta = face_recognition.load_image_file('ImagesExamples/Santa.jpeg')
 imageSanta = cv2.cvtColor(imageSanta, cv2.COLOR_BGR2RGB)
 
-imageSantaTest = face_recognition.load_image_file('imagesExamples/Santa2.jpg')
+imageSantaTest = face_recognition.load_image_file('ImagesExamples/Santa2.jpg')
 imageSantaTest = cv2.cvtColor(imageSantaTest, cv2.COLOR_BGR2RGB)
 
 # identify and mark corners of face
