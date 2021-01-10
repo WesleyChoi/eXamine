@@ -74,33 +74,36 @@ class ZoomRecognize(object):
                 name = students.studentNames[matchIndex].upper()
                 print('Detected student: ' + name)
                 presentStudentNames.append(name)
-
-                # draw rectangle around face
-                rgb = (70, 0, 70)
-                cv2.rectangle(self.screenshotImages[face.screenshotIndex],
-                              (face.location[3], face.location[0]), (face.location[1], face.location[2]),
-                              rgb, 2)
-
-                # font settings for label
-                fontface = cv2.FONT_HERSHEY_SIMPLEX
-                fontscale = (face.location[1] - face.location[3]) * 0.0075
-                fontthickness = 2
-
-                # draw background box for label
-                labelSize = cv2.getTextSize(name, fontface, fontscale, fontthickness)
-                _x1 = face.location[3] - 15
-                _y1 = face.location[2] + 50
-                _x2 = _x1 + labelSize[0][0] + 5
-                _y2 = face.location[2] + 30 - int(labelSize[0][1])
-                cv2.rectangle(self.screenshotImages[face.screenshotIndex],
-                              (_x1, _y1), (_x2, _y2), rgb, cv2.FILLED)
-
-                # draw text in label
-                cv2.putText(self.screenshotImages[face.screenshotIndex],name,
-                            (face.location[3]-10, face.location[2]+40), fontface, fontscale,
-                            (255,255,255), fontthickness)
+                face.add_name(name)
+                self.drawFaces(face)
 
         return presentStudentNames
+
+    def drawFaces(self, face):
+        # draw rectangle around face
+        rgb = (90, 20, 20)  # colour of label background and box around face
+        cv2.rectangle(self.screenshotImages[face.screenshotIndex],
+                      (face.location[3], face.location[0]), (face.location[1], face.location[2]),
+                      rgb, 2)
+
+        # font settings for label
+        fontface = cv2.FONT_HERSHEY_SIMPLEX
+        fontscale = (face.location[1] - face.location[3]) * 0.0075
+        fontthickness = 2
+
+        # draw background box for label
+        labelSize = cv2.getTextSize(face.name, fontface, fontscale, fontthickness)
+        _x1 = face.location[3] - 15
+        _y1 = face.location[2] + 50
+        _x2 = _x1 + labelSize[0][0] + 5
+        _y2 = face.location[2] + 30 - int(labelSize[0][1])
+        cv2.rectangle(self.screenshotImages[face.screenshotIndex],
+                      (_x1, _y1), (_x2, _y2), rgb, cv2.FILLED)
+
+        # draw text in label
+        cv2.putText(self.screenshotImages[face.screenshotIndex], face.name,
+                    (face.location[3] - 10, face.location[2] + 40), fontface, fontscale,
+                    (255, 255, 255), fontthickness)
 
     def showImages(self):
         # display the images
@@ -109,15 +112,6 @@ class ZoomRecognize(object):
             cv2.imshow(f'Image {i}', image)
 
         cv2.waitKey()
-
-    def get_optimal_font_scale(text, width):
-        for scale in reversed(range(0, 60, 1)):
-            textSize = cv.getTextSize(text, fontFace=cv.FONT_HERSHEY_DUPLEX, fontScale=scale / 10, thickness=1)
-        new_width = textSize[0][0]
-        print(new_width)
-        if new_width <= width:
-            return scale / 10
-        return 1
 
 
 if __name__ == "__main__":
