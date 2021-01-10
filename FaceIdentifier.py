@@ -47,9 +47,18 @@ class FaceIdentifier(object):
         students.encode()
         zoomScreenshots.recognize(students)
 
+# How to use this class
 if __name__ == "__main__":
-    faceIdentifier = FaceIdentifier('ImagesAttendance', 'ClassScreenshot')
+    studentImagesPath = 'ImagesAttendance'
+    screenshotImagesPath = 'ClassScreenshot'
+
+    # Creating the class
+    faceIdentifier = FaceIdentifier(studentImagesPath, screenshotImagesPath)
+
+    # Run the function to determine who is in the class (To be completed)
     faceIdentifier.recognize_faces()
+
+
 """
 # retrieve images from ImagesAttendance folder
 path = '../ImagesAttendance'
