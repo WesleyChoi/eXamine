@@ -16,16 +16,15 @@ class SIDRecognize(object):
         for student in self.studentIDFileNames:
             currentImage = cv2.imread(f'{studentIDPath}/{student}')
             self.studentIDImages.append(currentImage)
-            self.studentNames.append(os.path.splitext(student)[0])
-
-        print(self.studentNames)
+            self.studentNames.append(os.path.splitext(student)[0].upper())
 
     def encode(self):
         for image in self.studentIDImages:
             image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
             encodedImage = face_recognition.face_encodings(image)[0]
             self.studentIDsEncoded.append(encodedImage)
-            print('Encoding finished')
+
+        print('All encoding finished')
 
 class ZoomRecognize(object):
     def __init__(self, screenshotPath):
@@ -37,7 +36,7 @@ class ZoomRecognize(object):
             currentImage = cv2.imread(f'{screenshotPath}/{screenshot}')
             currentImage = cv2.cvtColor(currentImage, cv2.COLOR_BGR2RGB)
             self.screenshotImages.append(currentImage)
-        print(self.screenshotFileNames)
+        print('Screenshot images: ' + str(self.screenshotFileNames))
   
     def recognize(self, students : SIDRecognize):
         facesInScreenshot = []
@@ -47,6 +46,7 @@ class ZoomRecognize(object):
             facesInScreenshot = facesInScreenshot + face_recognition.face_locations(image)
             screenshotEncodedFaces = screenshotEncodedFaces + face_recognition.face_encodings(image, facesInScreenshot)
 
+        presentStudentNames = []
         for encodedFace in screenshotEncodedFaces:
             correctMatches = face_recognition.compare_faces(students.studentIDsEncoded, encodedFace)
             faceDistance = face_recognition.face_distance(students.studentIDsEncoded, encodedFace)
@@ -54,7 +54,10 @@ class ZoomRecognize(object):
 
             if correctMatches[matchIndex]:
                 name = students.studentNames[matchIndex].upper()
-                print(name)
+                print('Detected student: ' + name)
+                presentStudentNames.append(name)
+
+        return presentStudentNames
 
 
 if __name__ == "__main__":

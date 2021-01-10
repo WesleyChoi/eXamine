@@ -13,14 +13,14 @@ class FaceIdentifier(object):
         self.presentStudents = os.listdir(self.studentImagesPath)
 
         self.retrieve_names()
-        #self.upload_screenshots()
+        # self.upload_screenshots()
 
     def retrieve_names(self):
         for student in self.presentStudents:
             currentImage = cv2.imread(f'{self.studentImagesPath}/{student}')
             self.images.append(currentImage)
-            self.studentNames.append(os.path.splitext(student)[0])
-        print('Students in class:' + str(self.studentNames))
+            self.studentNames.append(os.path.splitext(student)[0].upper())
+        print('Students in class: ' + str(self.studentNames))
 
     # TODO: unfinished
     def upload_screenshots(self):
@@ -45,7 +45,16 @@ class FaceIdentifier(object):
         students = SIDRecognize(self.studentImagesPath)
         zoomScreenshots = ZoomRecognize(self.screenshotImagesPath)
         students.encode()
-        zoomScreenshots.recognize(students)
+        presentStudentNames = zoomScreenshots.recognize(students)
+
+        studentDict = {}
+        for student in self.studentNames:
+            if student in presentStudentNames:
+                studentDict[student] = True
+            else:
+                studentDict[student] = False
+
+        return studentDict
 
 # How to use this class
 if __name__ == "__main__":
@@ -55,8 +64,9 @@ if __name__ == "__main__":
     # Creating the class
     faceIdentifier = FaceIdentifier(studentImagesPath, screenshotImagesPath)
 
-    # Run the function to determine who is in the class (To be completed)
-    faceIdentifier.recognize_faces()
+    # Dictionary of {student name : bool for whether they are in the class}
+    studentDict = faceIdentifier.recognize_faces()
+    print(studentDict)
 
 
 """
