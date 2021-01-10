@@ -34,8 +34,8 @@ def generate_attendance():
 # Create main window
 root = tk.Tk()
 root.geometry("310x320")
-root.title("placeholder text")
-root.configure(background="#0080ff")
+root.title("eXamine")
+root.configure(background="#e2e2e2")
 icon = tk.PhotoImage(file='icon.png')
 root.iconphoto(False, icon)
 
@@ -50,9 +50,9 @@ select_sid_button.config(image = pixel, width = buttonSize[0] - 6, height = butt
 select_screenshots_button.config(image = pixel, width = buttonSize[0] - 6, height = buttonSize[1] - 6, compound = "c", bg = "#73c2fb", padx=0, pady=0)
 generate_attendance_button.config(image = pixel, width = buttonSize[0] - 6, height = buttonSize[1] - 6, compound = "c", bg = "#73c2fb", padx=0, pady=0)
 
-select_sid_button.config(font=("Proxima Nova", 15, "bold italic"))
-select_screenshots_button.config(font=("Proxima Nova", 15, "bold italic"), wraplength=220)
-generate_attendance_button.config(font=("Proxima Nova", 15, "bold italic"))
+select_sid_button.config(font=("Proxima Nova", 15))
+select_screenshots_button.config(font=("Proxima Nova", 15), wraplength=220)
+generate_attendance_button.config(font=("Proxima Nova", 15))
 
 # Place onto screen
 select_sid_button.pack()
