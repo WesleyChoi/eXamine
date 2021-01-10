@@ -92,6 +92,7 @@ def progress_loading_bar():
         windowSize = (310, 630)
         root.geometry("%dx%d+%d+%d" % (windowSize[0], windowSize[1], (root.winfo_screenwidth() - windowSize[0]) / 2, (root.winfo_screenheight() - windowSize[1]) / 2))
         root.update()
+        current_progress = 0
 
 
 # Create main window
