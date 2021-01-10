@@ -4,7 +4,7 @@ import face_recognition
 import os
 
 # retrieve images from ImagesAttendance folder
-path = 'ImagesAttendance'
+path = '../ImagesAttendance'
 images = []
 classNames = []
 presentStudents = os.listdir(path)
