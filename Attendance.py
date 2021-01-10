@@ -42,6 +42,14 @@ while True:
         correctMatches = face_recognition.compare_faces(encodeListKnown, encodedFace)
         faceDistance = face_recognition.face_distance(encodeListKnown, encodedFace)
         print(faceDistance)
+        matchIndex = np.argmin(faceDistance)
+
+        if correctMatches[matchIndex]:
+            name = classNames[matchIndex].upper()
+            print(name)
+
+    cv2.imshow('Webcam', image)
+    cv2.waitKey(1)
 
 # # identify and mark corners of face
 #
