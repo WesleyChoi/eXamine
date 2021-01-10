@@ -4,7 +4,7 @@ import face_recognition
 import os
 
 # retrieve images from ImagesAttendance folder
-path = 'ImagesAttendance'
+path = '../ImagesAttendance'
 images = []
 classNames = []
 presentStudents = os.listdir(path)
@@ -28,27 +28,10 @@ def findEncodings(images):
 encodeListKnown = findEncodings(images)
 print('Encoding finished')
 
-# changed cap
-# retrieve images from ImagesAttendance folder
-
-# In the console, make sure the user includes the file type
-# Also have some return in the UI if the user does not type an existing file
-print('What is the name of your screenshot image file?')
-imageToConvert = 'ClassScreenshot/'
-imageToConvert += str(input())
-
-try:
-    classImage = face_recognition.load_image_file(imageToConvert)
-except IOError:
-    print('File location was not valid. Make sure that your file was type correctly, including the file type.')
-
-classImage = cv2.cvtColor(classImage, cv2.COLOR_BGR2RGB)
+cap = cv2.VideoCapture(0)
 
 while True:
-    # try:
-    success, image = classImage.read()
-    # except IOError:
-    #     print('File location was not valid. Make sure that your file was type correctly, including the file type.')
+    success, image = cap.read()
     imageReducedSize = cv2.resize(image,(0,0), None, 0.25, 0.25)
     imageReducedSize = cv2.cvtColor(imageReducedSize, cv2.COLOR_BGR2RGB)
 
@@ -67,8 +50,6 @@ while True:
 
     cv2.imshow('Webcam', image)
     cv2.waitKey(1)
-
-
 
 # # identify and mark corners of face
 #
