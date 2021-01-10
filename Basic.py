@@ -1,5 +1,5 @@
 import cv2
-import numpy
+import numpy as np
 import face_recognition
 
 # import images and convert to rgb
