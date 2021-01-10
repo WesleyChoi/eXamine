@@ -7,6 +7,7 @@ sidFilePath = ""
 screenshotFilePath = ""
 attendance = {}
 
+windowSize = (310, 320)
 buttonSize = (300, 100)
 buttonPadding = (5, 5)
 
@@ -33,7 +34,7 @@ def generate_attendance():
 
 # Create main window
 root = tk.Tk()
-root.geometry("310x320")
+root.geometry("%dx%d+%d+%d" % (windowSize[0], windowSize[1], (root.winfo_screenwidth() - windowSize[0]) / 2, (root.winfo_screenheight() - windowSize[1]) / 2))
 root.title("eXamine")
 root.configure(background="#e2e2e2")
 icon = tk.PhotoImage(file='icon.png')
