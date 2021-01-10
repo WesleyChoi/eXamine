@@ -27,11 +27,12 @@ class SIDRecognize(object):
             self.studentIDImages.append(currentImage)
             self.studentNames.append(os.path.splitext(student)[0].upper())
 
-    def encode(self):
+    def encode(self, progress_callback):
         for image in self.studentIDImages:
             image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
             encodedImage = face_recognition.face_encodings(image)[0]
             self.studentIDsEncoded.append(encodedImage)
+            progress_callback()
 
         print('All encoding finished')
 
@@ -47,7 +48,7 @@ class ZoomRecognize(object):
             self.screenshotImages.append(currentImage)
         print('Screenshot images: ' + str(self.screenshotFileNames))
   
-    def recognize(self, students : SIDRecognize):
+    def recognize(self, students : SIDRecognize, progress_callback):
         faces = [] # Array of faces
 
         # For each zoom screenshot, add the faces into Faces
@@ -63,6 +64,7 @@ class ZoomRecognize(object):
             for j in range(0, len(faceLocationsInScreenshot)):
                 currentFace = Face(faceLocationsInScreenshot[j], encodedFacesInScreenshot[j], i)
                 faces.append(currentFace)
+            progress_callback()
 
         presentStudentNames = []
         for face in faces:

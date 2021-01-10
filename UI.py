@@ -21,7 +21,6 @@ buttonSize = (300, 100)
 buttonPadding = (5, 5)
 
 progress_bar : ttk.Progressbar = None
-load_window : tk.Tk = None
 
 face_identifier: fId.FaceIdentifier = None
 
@@ -46,20 +45,14 @@ def visualize():
 
 
 def create_loading_bar():
-    global load_window, progress_bar
-    load_window = tk.Tk()
+    global progress_bar, windowSize, root
+    progress_bar = ttk.Progressbar(root, orient=tk.HORIZONTAL, length=300, mode='determinate')
 
-    # load_logo_im: im.Image = im.open("Bottom Icon.PNG")
-    # load_logo_im = load_logo_im.resize(buttonSize, im.ANTIALIAS)
-    # load_logo = imTk.PhotoImage(load_logo_im)
-    # load_logo_label = tk.Label(load_window, image=load_logo)
-
-    progress_bar = ttk.Progressbar(load_window, orient=tk.HORIZONTAL, length=100, mode='determinate')
-
-    # load_logo_label.pack()
+    windowSize = (310, 660)
+    root.geometry("%dx%d+%d+%d" % (windowSize[0], windowSize[1], (root.winfo_screenwidth() - windowSize[0]) / 2, (root.winfo_screenheight() - windowSize[1]) / 2))
     progress_bar.pack()
-
-    load_window.mainloop()
+    progress_bar.place(x=buttonPadding[0], y=buttonPadding[1] * 7 + buttonSize[1] * 6)
+    root.update()
 
 
 def generate_attendance():
@@ -78,22 +71,27 @@ def generate_attendance():
     display_images_button["state"] = "disabled"
     display_attendance_button["state"] = "disabled"
 
-    loading_bar_division = len(os.listdir(sidFilePath)) + len(os.listdir(sidFilePath))
+    create_loading_bar()
+    loading_bar_division = len(os.listdir(screenshotFilePath)) + len(os.listdir(sidFilePath))
+    print(loading_bar_division)
     face_identifier = fId.FaceIdentifier(sidFilePath, screenshotFilePath)
 
-    # create_loading_bar()
-    attendance = face_identifier.recognize_faces()
+    attendance = face_identifier.recognize_faces(progress_loading_bar)
 
     display_images_button["state"] = "normal"
     display_attendance_button["state"] = "normal"
 
 
 def progress_loading_bar():
-    global progress_bar, load_window, current_progress
-    progress_bar['value'] = current_progress * 100 / loading_bar_division
-    load_window.update_idletasks()
+    global progress_bar, current_progress, windowSize, root
+    current_progress  = current_progress + 1
+    progress_bar['value'] = round(current_progress * 100 / loading_bar_division)
+    root.update_idletasks()
     if current_progress == loading_bar_division:
-        load_window.destroy()
+        progress_bar.destroy()
+        windowSize = (310, 630)
+        root.geometry("%dx%d+%d+%d" % (windowSize[0], windowSize[1], (root.winfo_screenwidth() - windowSize[0]) / 2, (root.winfo_screenheight() - windowSize[1]) / 2))
+        root.update()
 
 
 # Create main window

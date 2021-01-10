@@ -21,11 +21,11 @@ class FaceIdentifier(object):
             self.studentNames.append(os.path.splitext(student)[0].upper())
         print('Students in class: ' + str(self.studentNames))
 
-    def recognize_faces(self):
+    def recognize_faces(self, progress_callback):
         self.sIDRecognize = SIDRecognize(self.studentImagesPath)
         self.zoomRecognize = ZoomRecognize(self.screenshotImagesPath)
-        self.sIDRecognize.encode()
-        presentStudentNames = self.zoomRecognize.recognize(self.sIDRecognize)
+        self.sIDRecognize.encode(progress_callback)
+        presentStudentNames = self.zoomRecognize.recognize(self.sIDRecognize, progress_callback)
 
         studentDict = {}
         for student in self.studentNames:
