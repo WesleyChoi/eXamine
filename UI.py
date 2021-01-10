@@ -1,15 +1,21 @@
 import tkinter as tk
+import tkinter.ttk as ttk
 import tkinter.filedialog as tkf
 import tkinter.messagebox as tkm
-import FaceIdentifier as fi
+import FaceIdentifier as fId
+import PIL.ImageTk as imTk
+import PIL.Image as im
+
+import os
 
 sidFilePath = ""
 screenshotFilePath = ""
 attendance = {}
 
-windowSize = (310, 320)
+windowSize = (310, 320+105)
 buttonSize = (300, 100)
 buttonPadding = (5, 5)
+
 
 def select_sid():
     global sidFilePath
@@ -21,6 +27,11 @@ def select_screenshots():
     screenshotFilePath = tkf.askdirectory()
 
 
+def create_loading_bar():
+    load = tk.Tk()
+    progress = tk.Progressbar(load, orient=tk.HORIZONTAL, length=100, mode='determinate')
+
+
 def generate_attendance():
     global attendance
     if sidFilePath == "":
@@ -29,8 +40,16 @@ def generate_attendance():
     if screenshotFilePath == "":
         tkm.showinfo("Error", "No Zoom Meeting screenshot folder selected")
         return
-    face_identifier = fi.FaceIdentifier(sidFilePath, screenshotFilePath)
+    if not os.listdir(sidFilePath):
+        tkm.showinfo("Error", "Student ID folder is empty")
+    if not os.listdir(screenshotFilePath):
+        tkm.showinfo("Error", "Zoom Meeting screenshot folder is empty")
+
+    face_identifier = fId.FaceIdentifier(sidFilePath, screenshotFilePath)
+    create_loading_bar()
+
     attendance = face_identifier.recognize_faces()
+
 
 # Create main window
 root = tk.Tk()
@@ -55,6 +74,12 @@ select_sid_button.config(font=("Proxima Nova", 15))
 select_screenshots_button.config(font=("Proxima Nova", 15), wraplength=220)
 generate_attendance_button.config(font=("Proxima Nova", 15))
 
+image : im.Image = im.open("Bottom Icon.PNG")
+image = image.resize(buttonSize, im.ANTIALIAS)
+img = imTk.PhotoImage(image)
+img_label = tk.Label(root, image=img)
+
+
 # Place onto screen
 select_sid_button.pack()
 select_screenshots_button.pack()
@@ -63,5 +88,7 @@ generate_attendance_button.pack()
 select_sid_button.place(x=buttonPadding[0], y=buttonPadding[1])
 select_screenshots_button.place(x=buttonPadding[0], y=buttonPadding[1] * 2 + buttonSize[1])
 generate_attendance_button.place(x=buttonPadding[0], y=buttonPadding[1] * 3 + buttonSize[1] * 2)
+img_label.place(x=buttonPadding[0], y=buttonPadding[1] * 4 + buttonSize[1] * 3)
 
+# Main loop
 tk.mainloop()
