@@ -75,11 +75,11 @@ class ZoomRecognize(object):
                 print('Detected student: ' + name)
                 presentStudentNames.append(name)
                 face.add_name(name)
-                self.drawFaces(face)
+                self.drawFace(face)
 
         return presentStudentNames
 
-    def drawFaces(self, face):
+    def drawFace(self, face):
         # draw rectangle around face
         rgb = (90, 20, 20)  # colour of label background and box around face
         cv2.rectangle(self.screenshotImages[face.screenshotIndex],
